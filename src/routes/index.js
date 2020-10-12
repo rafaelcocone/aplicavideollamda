@@ -1,11 +1,11 @@
-//almacenar rutas principales
 'use strict'
 
-const   express = require('express'),
+
+const express = require('express'),
     router = express.Router();
 
-    router.get('/', (req,res) => {
-        res.send('hello world')
-    })
+router.get('/', (req,res) => { 
+    res.render('index')
+});
 
-module.exports = router
+module.exports = router;

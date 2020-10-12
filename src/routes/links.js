@@ -3,13 +3,11 @@
 const   express     = require('express'),
         router      = express.Router(),
         pool        = require('../database')
-
-//const  {isLoggedIn} = require('../lib/auth')//verificar si esta autentificado y loggeado
+const  {isLoggedIn} = require('../lib/auth')//verificar si esta autentificado y loggeado
 
 router.get('/add', (req,res) =>{
     res.render('links/add')
 });
-/*
 router.post('/add',isLoggedIn,async(req,res) => {
     //decosntruir formulario
     const {title, url, descripcion}  = req.body
@@ -17,7 +15,8 @@ router.post('/add',isLoggedIn,async(req,res) => {
     const newLink = {
         title,
         url,
-        descripcion
+        descripcion,
+        user_id: req.user.id
     };
     //envio a guardar datos
     await pool.query('INSERT INTO links set ?' ,[newLink] )
@@ -25,7 +24,7 @@ router.post('/add',isLoggedIn,async(req,res) => {
     res.redirect('/links')
 })
 router.get('/',isLoggedIn, async(req,res) => {
-    const links = await pool.query('SELECT  * FROM links')
+    const links = await pool.query('SELECT  * FROM links WHERE user_id = ?', [req.user.id] )
     res.render('links/list', {links: links})
 })
 router.get('/delete/:id', isLoggedIn,async(req,res) => {
@@ -54,9 +53,6 @@ router.post('/edit/:id',isLoggedIn, async(req,res) => {
     req.flash('success','Link editado satisfatoriamente');
     res.redirect('/links')
 })
-*/
-
-
 
 
 

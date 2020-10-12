@@ -1,5 +1,6 @@
 'use strict'
 
+//varibles globales
 //variables
 var fs = require('fs'),
     https = require('https'),
@@ -9,60 +10,72 @@ var fs = require('fs'),
         cert: fs.readFileSync('cert.pem')
     }
 
-const   express = require('express'),
-        morgan  = require('morgan'),
-        exphbs  = require('express-handlebars'),
-        path    = require('path')
+
+const express = require('express'),
+    app     = express(),
+    morgan      = require('morgan'),//generador de plantillas
+    exphbs  = require('express-handlebars'),
+    path    =  require('path'),
+    flash       = require('connect-flash'),//cuadros dfe mensajes
+    session     = require('express-session'),//sessiones
+    MySQLStore  = require('express-mysql-session'),//ssesiones de mysql par abase de datos
+    passport    = require('passport')
 
 
-//inicializaciones
-const app = express()
 const   server = https.createServer(options, app)
+const {database} = require('./keys')
+require('./lib/passport')
 
-//settieng
 
-app.set('port', process.env.PORT || puerto)
-app.set('views',path.join(__dirname),'views' )
+//settings
+app.set('port',process.env.PORT || puerto)
 
-app.engine('.hbs',exphbs({
+app.set('views', path.join(__dirname,'views'))
+app.engine('.hbs', exphbs({
     defaultLayout: 'main',
-    layoutsDir: path.join(app.get('views'), 'layouts'),
-    partialsDir: path.join(app.get('views'), 'partials'),
+    layoutsDir: path.join(app.get('views'),'layouts'),
+    partialsDir:path.join(app.get('views'),'partials'),
     extname: '.hbs',
     helpers: require('./lib/handlebars')
-}));
+}))
 app.set('view engine', '.hbs')
 
 
+///middleware
+app.use(session({//guardado de seecion en base de datos 
+    secret: 'mensajeroMysqlSession',
+    resave: false,
+    saveUninitialized: false,
+    store: new MySQLStore(database)
+}))
+app.use(flash())//uso de mensajes y notificaciones
 
-//const  SocketIO = require('socket.io')
-//const   io = SocketIO(server);
-
-
-//middleware
 app.use( morgan('dev') )
-app.use( express.urlencoded({extended: false}) )
-app.use( express.json() )
+app.use(express.urlencoded({extended:false}))
+app.use(express.json())
+app.use(passport.initialize())//inicializar paasport
+app.use(passport.session())
 
-//variables globales
+//variables
 app.use((req,res,next) => {
-    next()
+    app.locals.success =  req.flash('success')
+    app.locals.message =  req.flash('message')
+    app.locals.user    =  req.user
+    next();
 })
 
-//routes
+
+
+//routes (conecciones aroutes/indes.js)
 app.use(require('./routes'))
-app.use(require('./routes/authentification'))
+app.use(require('./routes/authentication'))
 app.use('/links',require('./routes/links'))
 
 
 //public
-app.use(express.static(path.join(__dirname,'public')))//establecer carpeta de public
-
+app.use(express.static(path.join(__dirname,'public')))
 
 
 //start server
 server.listen(app.get('port'), () => { console.log("server port",app.get('port')) });
-
-
-
 
