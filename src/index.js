@@ -10,7 +10,6 @@ var fs = require('fs'),
         cert: fs.readFileSync('cert.pem')
     }
 
-
 const express = require('express'),
     app     = express(),
     morgan      = require('morgan'),//generador de plantillas
@@ -19,12 +18,22 @@ const express = require('express'),
     flash       = require('connect-flash'),//cuadros dfe mensajes
     session     = require('express-session'),//sessiones
     MySQLStore  = require('express-mysql-session'),//ssesiones de mysql par abase de datos
-    passport    = require('passport')
-
+    passport    = require('passport'),
+    SocketIO = require('socket.io'),
+    { PeerServer, ExpressPeerServer } = require('peer');
+    
 
 const   server = https.createServer(options, app)
+const  io = SocketIO(server);
 const {database} = require('./keys')
+
+const peerServer = ExpressPeerServer(server,{
+    debug:true
+})
+
+
 require('./lib/passport')
+
 
 
 //settings
@@ -50,6 +59,7 @@ app.use(session({//guardado de seecion en base de datos
 }))
 app.use(flash())//uso de mensajes y notificaciones
 
+
 app.use( morgan('dev') )
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
@@ -70,6 +80,18 @@ app.use((req,res,next) => {
 app.use(require('./routes'))
 app.use(require('./routes/authentication'))
 app.use('/links',require('./routes/links'))
+app.use('/peerjs',peerServer)
+app.use('/videollamada',require('./routes/videollamada')(io))
+/*app.get('/videollamada/', (req, res) => {
+    req.flash('message','No fue seleccionada una room')
+    res.render('profile')
+})
+
+app.get('/videollamada/:room', (req, res) => {
+    const roomId =  req.params.room
+    console.log(roomId)
+  res.render('videollamada/videollamada', { roomId })
+}) */
 
 
 //public
