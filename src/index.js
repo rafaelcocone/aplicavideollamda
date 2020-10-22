@@ -82,16 +82,6 @@ app.use(require('./routes/authentication'))
 app.use('/links',require('./routes/links'))
 app.use('/peerjs',peerServer)
 app.use('/videollamada',require('./routes/videollamada')(io))
-/*app.get('/videollamada/', (req, res) => {
-    req.flash('message','No fue seleccionada una room')
-    res.render('profile')
-})
-
-app.get('/videollamada/:room', (req, res) => {
-    const roomId =  req.params.room
-    console.log(roomId)
-  res.render('videollamada/videollamada', { roomId })
-}) */
 
 
 //public

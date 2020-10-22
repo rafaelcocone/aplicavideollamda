@@ -1,29 +1,5 @@
 'use strict'
 
-/*const   express   = require('express'),
-        router    = express.Router(),
-        pool      = require('../database') //hace referencia al archivo en ../database.js
-      
-
-const { isObject } = require('util')
-        const { v4: uuidV4 } = require('uuid')
-        
-
-router.get('/', (req, res) => {
-    req.flash('message','No fue seleccionada una room')
-    res.render('profile')
-})
-
-router.get('/:room', (req, res) => {
-    const roomId =  req.params.room
-    console.log(roomId)
-  res.render('videollamada/videollamada', { roomId })
-}) 
-
-
-
-module.exports = router/*/
-
 const  express = require('express'),
         pool      = require('../database') //hace referencia al archivo en ../database.js
 
@@ -41,6 +17,39 @@ module.exports = function(io) {
       res.render('videollamada/videollamada', { roomId })
     }) 
     
+    /**
+         router.get('/:room', isLoggedIn,(req, res) => {
+
+      const roomId=undefined,// =  req.params.room,
+      userId=undefined// = req.user.id
+      var errorType = ''
+      const veee = undefined
+      try{
+       
+            //veee =  roomId +' '+ userId
+            console.log(roomId)
+        if(typeof roomId === 'undefined')
+          throw 'Ticket de videollamada no fue localizado'
+        console.log('5')
+        if(typeof userId === 'undefined')
+          throw 'El Id del usuario no ha sido localizado'
+
+      } catch($e){
+        errorType = $e
+        //
+        //res.render('profile')
+      }
+      if(errorType === '')
+        res.send(roomId)
+        req.flash('message',errorType)
+         res.render('profile')
+      
+      //res.send(errorType)
+      //res.render('videollamada/videollamada', { roomId })
+    }) 
+     */
+
+
     // io is available in this scope
     /*************************************** */
     io.on('connection', socket => {
