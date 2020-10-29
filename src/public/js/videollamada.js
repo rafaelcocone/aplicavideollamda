@@ -74,7 +74,7 @@ navigator.mediaDevices.getUserMedia(
     //evento de enviar mesajes
     $('#chat_message').keydown( (e)  => {
       if(e.which == 13 && $sendMensage.val().length !== 0 ){
-          socket.emit('message', $sendMensage.val());
+          socket.emit('message', {mensaje:$sendMensage.val(), name: room_name });
           $sendMensage.val('');
       }
     })
@@ -84,7 +84,7 @@ navigator.mediaDevices.getUserMedia(
       $('.chat__messages_list').append(
           $('<li/>')
               .addClass('chat__message')
-              .append(`<b>user:</b> ${message}`)
+              .append(`<b>${message.name}:</b> ${message.mensaje}`)
       )
       scrollToBottom();
     })
@@ -285,3 +285,10 @@ const scrollToBottom = () => {
   var d = $('.main__chat_window');
   d.scrollTop(d.prop("scrollHeight"));
 }
+
+
+
+document.getElementById('main__controles_salir')
+    .addEventListener('click', (e) => {
+      window.open($urlIO+"/profile",'_self')    
+  });

@@ -1,76 +1,82 @@
 
 <script>
-        const ROOM_ID = "{{roomId}}"
+        const ROOM_DATA = "{{ticket}}",
+            room_name = "{{name}}",
+            room_email = "{{email}}", 
+            ROOM_ID = "{{roomId}}"
 </script>
 
 {{!-- Styles--}}
  <link rel="stylesheet" href="/css/videollamada.css">
-<div class="container p-4">
+<div class="container ">
    
        
-<div class="main">
-    <div class="main__izquierda">
-        <div class="main__videos">
-            <div id="video-grid">
+    <div class="main">
+        <div class="main__izquierda">
+            <div class="main__videos">
+                <div id="video-grid">
 
-            </div>
-        </div>
-        <div class="main__controles">
-            <div class="main__controles__panel">
-                <div onclick="muteUnmute()" class="main__controles_button main__mute_button">
-                    <i class="fas fa-microphone"></i>
-                    <span>Mute</span>
                 </div>
-                <div onclick="playStop()" class="main__controles_button main__video_button">
-                    <i class="fas fa-video"></i>
-                    <span>Stop video</span>
+            </div>
+            <div class="main__controles">
+                 <div class="main__controles__panel"></div>
+
+                <div class="main__controles__panel">
+                    <div onclick="muteUnmute()" class="main__controles_button main__mute_button">
+                        <i class="fas fa-microphone"></i>
+                        <span>Mute</span>
+                    </div>
+                    <div onclick="playStop()" class="main__controles_button main__video_button">
+                        <i class="fas fa-video"></i>
+                        <span>Stop video</span>
+                    </div>
+
+                </div>
+                {{!--
+                <div class="main__controles__panel">
+                    <div class="main__controles_button">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Seguridad</span>
+                    </div>
+                    <div class="main__controles_button">
+                        <i class="fas fa-user-friends"></i>
+                        <span>Colaboradores</span>
+                    </div>
+                    <div class="main__controles_button">
+                        <i class="fas fa-comment-alt"></i>
+                        <span>Chat</span>
+                    </div>
+                </div>
+                --}}
+                <div class="main__controles__panel">
+                    <div class="main__controles_button2" id="main__controles_salir">
+                        
+                        <span class="leave_meeting">Salir</span>
+                    </div>
                 </div>
 
+                
             </div>
-            {{!--
-            <div class="main__controles__panel">
-                <div class="main__controles_button">
-                    <i class="fas fa-shield-alt"></i>
-                    <span>Seguridad</span>
-                </div>
-                <div class="main__controles_button">
-                    <i class="fas fa-user-friends"></i>
-                    <span>Colaboradores</span>
-                </div>
-                <div class="main__controles_button">
-                    <i class="fas fa-comment-alt"></i>
-                    <span>Chat</span>
-                </div>
-            </div>
-            <div class="main__controles__panel">
-                <div class="main__controles_button">
-                    
-                    <span class="leave_meeting">Salir de Reunión</span>
-                </div>
-            </div>
-
-            --}}
-        </div>
+                
             
-        
+
+        </div>
+        <div class="main__derecha">
+            <div class="main__header text-uppercase">
+                <h6>Chat</h6>
+            </div>
+            <div class="main__chat_window">
+                <ul class="chat__messages_list">
+
+                </ul>
+            </div>
+            <div class="main__message_container">
+                <input type="text" id="chat_message" placeholder="Escribe un mensaje...">
+            </div>
+
+        </div>
 
     </div>
-    <div class="main__derecha">
-        <div class="main__header">
-            <h6>Chat</h6>
-        </div>
-        <div class="main__chat_window">
-            <ul class="chat__messages_list">
-
-            </ul>
-        </div>
-        <div class="main__message_container">
-            <input type="text" id="chat_message" placeholder="Escribe un mensaje...">
-        </div>
-
-    </div>
-
-</div>
 </div>
 
 

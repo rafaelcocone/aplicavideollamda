@@ -2,6 +2,7 @@
 
 const  express = require('express'),
         pool      = require('../database') //hace referencia al archivo en ../database.js
+const  {isLoggedIn} = require('../lib/auth')//verificar si esta autentificado y loggeado
 
 module.exports = function(io) {
     let router = express.Router()
@@ -12,42 +13,62 @@ module.exports = function(io) {
         res.render('profile')
     })
     
-    router.get('/:room', (req, res) => {
+    /*router.get('/:room', (req, res) => {
         const roomId =  req.params.room
       res.render('videollamada/videollamada', { roomId })
-    }) 
+    })*/ 
     
-    /**
-         router.get('/:room', isLoggedIn,(req, res) => {
+    
+    router.get('/:room', isLoggedIn,async(req,res) => {
 
-      const roomId=undefined,// =  req.params.room,
-      userId=undefined// = req.user.id
-      var errorType = ''
+      var roomId  =  null,
+            userId =  null,
+            errorType = '',
+            ticket = [0]
       const veee = undefined
       try{
-       
-            //veee =  roomId +' '+ userId
-            console.log(roomId)
-        if(typeof roomId === 'undefined')
-          throw 'Ticket de videollamada no fue localizado'
-        console.log('5')
-        if(typeof userId === 'undefined')
-          throw 'El Id del usuario no ha sido localizado'
 
+        if(typeof req.params.room === 'undefined')
+          throw 'Ticket de videollamada no fue localizado'
+        roomId  =  req.params.room
+
+        if(typeof  req.user.id === 'undefined')
+          throw 'El Id del usuario no ha sido localizado'
+        userId =   req.user.id
+
+        if( roomId == '10')
+          throw ''
+        else{
+          ticket = await pool.query('SELECT * FROM tickets WHERE id_ticket = ? limit 1',[ roomId])
+          if(ticket.length == 0 )
+            throw 'El ticket no ha sido localizado'
+
+          if(ticket[0].id_user === userId )
+            throw ''
+
+          if(ticket[0].id_experto === userId )
+            throw ''
+          throw 'El usuario no esta asigando a este ticket'
+        }
+   
       } catch($e){
         errorType = $e
-        //
-        //res.render('profile')
       }
+  
       if(errorType === '')
-        res.send(roomId)
+        res.render('videollamada/videollamada', { ticket: ticket[0], 
+                                                  name: req.user.name, 
+                                                  email: req.user.email,
+                                                  roomId: roomId   })
+      else{
         req.flash('message',errorType)
-         res.render('profile')
-      
-      //res.send(errorType)
-      //res.render('videollamada/videollamada', { roomId })
+        res.render('profile')
+      }
+        
     }) 
-     */
+     
+
+   
 
 
     // io is available in this scope

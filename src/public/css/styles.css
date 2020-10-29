@@ -29,3 +29,6 @@ body{
         font-size: 5.5rem;
     }
 }
+.sticky-footer {
+    flex-shrink: none;
+  }
