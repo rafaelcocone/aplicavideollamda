@@ -131,7 +131,10 @@ video{
 }
 
 .tranmition_unmute, .tranmition_stop {
+    display: flex;
+    flex-direction: row;
     color: #CC3B33;
     position: absolute;
     bottom: 0;
+    justify-content: space-around;
 }
