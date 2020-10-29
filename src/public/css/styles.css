@@ -3,6 +3,8 @@ body{
     background-color: #f5f6f5;
     font-family: 'Oswald',sans-serif;
     overflow: hidden;
+    min-height: 50vh;
+    height:  80vh;
 }
 .index{
     width:  100vw;
@@ -29,6 +31,8 @@ body{
         font-size: 5.5rem;
     }
 }
+
+
 .sticky-footer {
     flex-shrink: none;
   }

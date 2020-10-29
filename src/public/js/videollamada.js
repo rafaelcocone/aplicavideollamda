@@ -1,4 +1,4 @@
-var $urlIO =  window.location.hostname == "localhost" ? 'https://localhost:4000' : 'https://mrbisne.com:3003' ;
+var $urlIO =  window.location.hostname == "localhost" ? 'https://localhost:4000' : 'https://mrbisne.com:4000' ;
 const socket = io($urlIO);
 const videoGrid = document.getElementById('video-grid')
 let $sendMensage = $('#chat_message')

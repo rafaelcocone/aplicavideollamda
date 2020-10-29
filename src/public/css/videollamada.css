@@ -132,4 +132,6 @@ video{
 
 .tranmition_unmute, .tranmition_stop {
     color: #CC3B33;
+    position: absolute;
+    bottom: 0;
 }
