@@ -27,6 +27,7 @@ video{
     height:  80vh;
     width: auto;
     display: flex;
+    padding: 10px;
 }
 
 .main__izquierda{
@@ -51,7 +52,8 @@ video{
     background-color: #1C1E20;
     color: #D2D2D2;
     padding: 5px;
-    justify-content: space-between;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .main__controles__panel{
@@ -73,10 +75,10 @@ video{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 8px 10px;
-    min-width: 80px;
-    min-height: 50px;
-    height: 50px;
+    padding: 20px;
+    min-width: 100px;
+    min-height: 30px;
+    height: 30px;
     cursor: pointer;
     background-color: red;
     color: white;
@@ -100,6 +102,7 @@ video{
     flex: 0.2;
     display: flex;
     flex-direction: column;
+    border: 1px solid #4d5858;
 }
 
 .main__header{
@@ -113,12 +116,15 @@ video{
     flex-grow: 1;
     overflow-y: auto;
 
+    background-color:#e9ecef;
+    color: black;
+
 }
 
 .main__message_container{
     padding: 22px 12px;
     display: flex;
-    background-color:#e9ecef;
+    background-color: white;
     color: black;
     
 }
@@ -134,7 +140,6 @@ video{
     display: flex;
     flex-direction: row;
     color: #CC3B33;
-    position: absolute;
-    bottom: 0;
+
     justify-content: space-around;
 }
