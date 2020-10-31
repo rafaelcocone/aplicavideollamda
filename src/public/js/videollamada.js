@@ -45,8 +45,8 @@ navigator.getUserMedia  = navigator.getUserMedia ||
                         navigator.msGetUserMedia;
 
 var constraints = { audio: true, video: {
-                          width: { min: 240, ideal: 480, max: 720 },
-                          height: { min: 144, ideal: 240, max: 480 },
+                          width: { min: 360, ideal: 360, max: 720 },
+                          height: { min: 360, ideal: 360, max: 480 },
                           frameRate: { ideal: 10, max: 10 } 
                         } }
 
