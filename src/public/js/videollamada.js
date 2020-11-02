@@ -234,17 +234,23 @@ const muteUnmute = () => {
 
 const setMuteButton = () => {
   const html = `
+    <img src="/img/sin_sonido.png" alt="Mute" style="width:60px;height:60px;">
+  `
+  /*const html = `
     <i class="fas fa-microphone"></i>
     <span>Mute</span>
-  `
+  `*/
   document.querySelector('.main__mute_button').innerHTML = html;
 }
 
 const setUnmuteButton = () => {
   const html = `
+    <img src="/img/audio.png" alt="Mute" style="width:60px;height:60px;">
+  `
+  /*const html = `
     <i class="tranmition_unmute fas fa-microphone-slash"></i>
     <span>Unmute</span>
-  `
+  ` */
   document.querySelector('.main__mute_button').innerHTML = html;
 } 
 
@@ -262,17 +268,23 @@ const playStop = () => {
 
 const setStopVideo = () => {
   const html = `
+    <img src="/img/video.png" alt="Stop video" style="width:60px;height:60px;">
+  `
+  /* const html = `
     <i class="fas fa-video"></i>
     <span>Stop Video</span>
-  `
+  ` */
   document.querySelector('.main__video_button').innerHTML = html;
 }
 
 const setPlayVideo = () => {
   const html = `
+    <img src="/img/sin_video.png" alt="Stop video" style="width:60px;height:60px;">
+  `
+  /* const html = `
   <i class="tranmition_stop  fas fa-video-slash"></i>
     <span>Play Video</span>
-  `
+  `*/
   document.querySelector('.main__video_button').innerHTML = html;
 }
 
