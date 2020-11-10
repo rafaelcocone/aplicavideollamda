@@ -1,9 +1,11 @@
 
 <script>
         const ROOM_DATA = "{{ticket}}",
+          
             room_name = "{{name}}",
             room_email = "{{email}}", 
             ROOM_ID = "{{roomId}}"
+        var id_usuario = undefined
 </script>
 
 {{!-- Styles--}}
@@ -22,13 +24,23 @@
                  <div class="main__controles__panel"></div>
 
                 <div class="main__controles__panel">
-                    <div onclick="muteUnmute()" class="main__controles_button main__mute_button">
+                    <div onclick="muteUnmute()" class="main__controles_button main__mute_button" style="display: block;">
                          {{!--<i class="fas fa-microphone"></i>--}}
                          <img src="/img/audio.png" alt="Mute" style="width:60px;height:60px;">
                     </div>
-                    <div onclick="playStop()" class="main__controles_button main__video_button">
+                    <div onclick="muteUnmute()" class="main__controles_button main__mute_button" style="display: none;">
+                         {{!--<i class="fas fa-microphone"></i>--}}
+                         <img src="/img/sin_sonido.png" alt="Mute" style="width:60px;height:60px;">
+                    </div>
+
+
+                    <div onclick="playStop()" class="main__controles_button main__video_button" style="display: block;">
                          {{!--<i class="fas fa-video"></i>--}}
                         <img src="/img/video.png" alt="Stop video" style="width:60px;height:60px;">
+                    </div>
+                     <div onclick="playStop()" class="main__controles_button main__video_button" style="display: none;" >
+                         {{!--<i class="fas fa-video"></i>--}}
+                        <img src="/img/sin_video.png" alt="Stop video" style="width:60px;height:60px;">
                     </div>
 
                 </div>
@@ -47,10 +59,11 @@
                         <span>Chat</span>
                     </div>
                 </div>
+
+                main__controles_contesra
                 --}}
                 <div class="main__controles__panel">
                     <div class="main__controles_button2" id="main__controles_salir">
-                        
                         <span class="leave_meeting text-uppercase">Salir</span>
                     </div>
                 </div>
@@ -81,4 +94,4 @@
 
 
 
-  <script src="/js/videollamada.js"></script>
+  <script src="/js/videollamada.js" defer ></script>

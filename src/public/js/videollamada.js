@@ -2,12 +2,14 @@ var $urlIO =  window.location.hostname == "localhost" ? 'https://localhost:4000'
 const socket = io($urlIO);
 const videoGrid = document.getElementById('video-grid')
 let $sendMensage = $('#chat_message')
-let $id_room = undefined;
+var $id_room = undefined;
+var $userId = undefined;
+let restart = true;
 
 const myVideo = document.createElement('video')
 myVideo.muted = true
 //usuario en sesion
-const peers = {}
+var peers = {}
 let myVideoStream 
 
 // Esta funcion se ejecuta antes de cerrar el navegador destruyendo la conexion del usuario en el servidor de PeerJS
@@ -18,7 +20,7 @@ window.onunload = window.onbeforeunload = function(e) {
 };
 
 //inicialiaza peer
-const myPeer = new Peer(undefined, {
+var myPeer = new Peer(undefined, {
   host: 'www.mrbisne.com',
  secure:true, 
  port: '3005',
@@ -45,9 +47,9 @@ navigator.getUserMedia  = navigator.getUserMedia ||
                         navigator.msGetUserMedia;
 
 var constraints = { audio: true, video: {
-                          width: { min: 360, ideal: 360, max: 720 },
-                          height: { min: 360, ideal: 360, max: 480 },
-                          frameRate: { ideal: 10, max: 10 } 
+                          width: { min: 144,  max: 360 },
+                          height: { min: 144,  max: 360 },
+                          frameRate: {  max: 8 } 
                         } }
 
 navigator.mediaDevices.getUserMedia(
@@ -57,18 +59,19 @@ navigator.mediaDevices.getUserMedia(
    myVideoStream = stream
    addVideoStream(myVideo, stream)
 
-    //recibir reespuesta de otros usuarios
-    myPeer.on('call', call => {
-      call.answer(stream)
+    myPeer.on('call', (call) => {
+      call.answer(myVideoStream)
+      restart = false;
       const video = document.createElement('video')
       call.on('stream', userVideoStream => {
         addVideoStream(video, userVideoStream)
-      })
+      })   
     })
-
+  
     //detectar coneccion de nuevo usuaio
     socket.on('user-connected', (userId) => {
-        connectToNewUser(userId, stream)
+      socket.emit('confirmacionConeccion', userId );
+      connectToNewUser(userId, stream)
     })
 
     //evento de enviar mesajes
@@ -81,6 +84,7 @@ navigator.mediaDevices.getUserMedia(
 
      ///resibir mensajes de otros usuario por chat
     socket.on('createMessage', message => {
+    
       $('.chat__messages_list').append(
           $('<li/>')
               .addClass('chat__message')
@@ -89,7 +93,21 @@ navigator.mediaDevices.getUserMedia(
       scrollToBottom();
     })
 
+    socket.on('confirmacionRespuesta', data => {
+      let myVar
+    if($userId == data.userId)
+      myVar = setTimeout(showPage, 3000);
+    
+    })
+
  })
+
+ const showPage = () => { 
+   if(restart)
+    location.reload();
+ }
+
+
 //envio de desconeccion
  socket.on('user-disconnected', userId => {
     //desconectar usuario si existe en lista
@@ -112,6 +130,7 @@ myPeer.on('open', id => {
   $id_room = id
   console.log('me: ')
   console.log(id)
+  $userId = id
   //id es mi propio id de coneccion
    socket.emit('join-room', ROOM_ID, id)
 })
@@ -225,67 +244,21 @@ const muteUnmute = () => {
   const enabled = myVideoStream.getAudioTracks()[0].enabled;
   if (enabled) {
     myVideoStream.getAudioTracks()[0].enabled = false;
-    setUnmuteButton();
   } else {
-    setMuteButton();
     myVideoStream.getAudioTracks()[0].enabled = true;
   }
+  $('.main__mute_button').toggle();
 }
-
-const setMuteButton = () => {
-  const html = `
-    <img src="/img/sin_sonido.png" alt="Mute" style="width:60px;height:60px;">
-  `
-  /*const html = `
-    <i class="fas fa-microphone"></i>
-    <span>Mute</span>
-  `*/
-  document.querySelector('.main__mute_button').innerHTML = html;
-}
-
-const setUnmuteButton = () => {
-  const html = `
-    <img src="/img/audio.png" alt="Mute" style="width:60px;height:60px;">
-  `
-  /*const html = `
-    <i class="tranmition_unmute fas fa-microphone-slash"></i>
-    <span>Unmute</span>
-  ` */
-  document.querySelector('.main__mute_button').innerHTML = html;
-} 
 
 //activar y ddeactivar video
 const playStop = () => {
   let enabled = myVideoStream.getVideoTracks()[0].enabled;
   if (enabled) {
     myVideoStream.getVideoTracks()[0].enabled = false;
-    setPlayVideo()
   } else {
-    setStopVideo()
     myVideoStream.getVideoTracks()[0].enabled = true;
   }
-}
-
-const setStopVideo = () => {
-  const html = `
-    <img src="/img/video.png" alt="Stop video" style="width:60px;height:60px;">
-  `
-  /* const html = `
-    <i class="fas fa-video"></i>
-    <span>Stop Video</span>
-  ` */
-  document.querySelector('.main__video_button').innerHTML = html;
-}
-
-const setPlayVideo = () => {
-  const html = `
-    <img src="/img/sin_video.png" alt="Stop video" style="width:60px;height:60px;">
-  `
-  /* const html = `
-  <i class="tranmition_stop  fas fa-video-slash"></i>
-    <span>Play Video</span>
-  `*/
-  document.querySelector('.main__video_button').innerHTML = html;
+  $('.main__video_button').toggle();
 }
 
 
@@ -298,9 +271,8 @@ const scrollToBottom = () => {
   d.scrollTop(d.prop("scrollHeight"));
 }
 
-
-
 document.getElementById('main__controles_salir')
     .addEventListener('click', (e) => {
       window.open($urlIO+"/profile",'_self')    
   });
+

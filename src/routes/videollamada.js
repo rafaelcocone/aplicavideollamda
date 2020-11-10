@@ -3,6 +3,7 @@
 const  express = require('express'),
         pool      = require('../database') //hace referencia al archivo en ../database.js
 const  {isLoggedIn} = require('../lib/auth')//verificar si esta autentificado y loggeado
+var id_usuario = undefined
 
 module.exports = function(io) {
     let router = express.Router()
@@ -35,6 +36,7 @@ module.exports = function(io) {
         if(typeof  req.user.id === 'undefined')
           throw 'El Id del usuario no ha sido localizado'
         userId =   req.user.id
+        id_usuario =   req.user.id
 
         if( roomId == '10')
           throw ''
@@ -58,6 +60,7 @@ module.exports = function(io) {
       if(errorType === '')
         res.render('videollamada/videollamada', { ticket: ticket[0], 
                                                   name: req.user.name, 
+                                                  id_usuario: id_usuario,
                                                   email: req.user.email,
                                                   roomId: roomId   })
       else{
@@ -77,7 +80,7 @@ module.exports = function(io) {
         socket.on('join-room', (roomId, userId) => {
             console.log('coneccion a room '+ roomId, userId);
             socket.join(roomId)
-            socket.to(roomId).broadcast.emit('user-connected', userId)
+            socket.to(roomId).emit('user-connected', {userId})
            
             io.in(roomId).clients((error, clients) => {
               if (error) throw error;
@@ -85,12 +88,9 @@ module.exports = function(io) {
               console.log(clients); 
             });
   
-            socket.on('areyouhere', (id_room) => {
+            socket.on('confirmacionConeccion', (data) => {
               //send message to reconecte
-             
-              console.log('are you here?:');
-              console.log(userId);
-              socket.to(roomId).broadcast.emit('user-connected', userId)
+              socket.to(roomId).broadcast.emit('confirmacionRespuesta', data)
             });
   
             socket.on('message', (message) => {
