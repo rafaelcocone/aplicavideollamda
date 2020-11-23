@@ -80,6 +80,7 @@ app.use((req,res,next) => {
 app.use(require('./routes'))
 app.use(require('./routes/authentication'))
 app.use('/links',require('./routes/links'))
+app.use('/agenda',require('./routes/agenda'))
 app.use('/peerjs',peerServer)
 app.use('/videollamada',require('./routes/videollamada')(io))
 

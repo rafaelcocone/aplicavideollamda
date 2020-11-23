@@ -1,0 +1,50 @@
+<div class="container p-4 main-container">
+    <div class="row">
+        {{#each tickets}}
+        
+
+
+                <div class="w3-card-4"  >
+                    <header class="w3-container w3-light-grey">
+                        <h3>{{id_ticket}}</h3>
+                    </header>
+                    <div class="w3-container">
+                        <p>1 nueva videollamada</p>
+                        <hr>
+                        <img src="https://mrbisne.com/portal/uploads/avatars/user-1.jpg" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+
+                        <p>CEO at Mighty Schools. Marketing and Advertising. Seeking a new job and new opportunities.</p><br>
+                    </div>
+                    <a href="videollamada/{{id_ticket}}" class="w3-button w3-block w3-dark-grey">+ Conectar</a>
+                   
+                </div>
+
+            <!--
+            <div class="col-md-3">
+                <div class="card text-center">
+                    
+                    <div class="card-body">
+                        <a href="{{id_ticket}}">
+                            <h3 class="card-title text-uppercase">
+                                {{id_ticket}}
+                            </h3>
+                        </a>
+                        <p class="m-2">{{fecha_videoConf}}</p>
+                        <p>{{timeago created_at}}</p>
+                        <a href="" class="btn btn-primary">
+                            <i class = "fa fa-comments-o"></i> Iniciar llamada
+                        </a>
+                        <!--<a href="links/edit/{{id}}" class="btn btn-secondary">Editar</a>
+                        <!--<a href="links/delete/{{id}}" class="btn btn-secondary">Eliminar link</a>
+                    </div>
+                </div>
+            </div>-->
+        {{else}}
+            <div class="col-md-4 mx-auto">
+                <div class="card card-body text-center">
+                    <p>No tienes videollamdas pendientes</p>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>
