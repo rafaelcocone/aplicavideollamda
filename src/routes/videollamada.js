@@ -56,13 +56,19 @@ module.exports = function(io) {
       } catch($e){
         errorType = $e
       }
-  
-      if(errorType === '')
+
+
+      if(errorType === ''){
+        res.redirect('https://mrbisne.com:3003/'+roomId);
+        /*
         res.render('videollamada/videollamada', { ticket: ticket[0], 
-                                                  name: req.user.name, 
-                                                  id_usuario: id_usuario,
-                                                  email: req.user.email,
-                                                  roomId: roomId   })
+          name: req.user.name, 
+          id_usuario: id_usuario,
+          email: req.user.email,
+          roomId: roomId   })*/
+
+      }
+        
       else{
         req.flash('message',errorType)
         res.render('profile')

@@ -4,7 +4,7 @@ const videoGrid = document.getElementById('video-grid')
 let $sendMensage = $('#chat_message')
 var $id_room = undefined;
 var $userId = undefined;
-let restart = true;
+let restart = false;
 
 const myVideo = document.createElement('video')
 myVideo.muted = true
@@ -21,7 +21,7 @@ window.onunload = window.onbeforeunload = function(e) {
 
 //inicialiaza peer
 var myPeer = new Peer(undefined, {
-  host: 'www.mrbisne.com',
+  host: 'mrbisne.com',
  secure:true, 
  port: '3005',
  debug: 3,
