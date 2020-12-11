@@ -21,18 +21,18 @@ const express = require('express'),
     session     = require('express-session'),//sessiones
     MySQLStore  = require('express-mysql-session'),//ssesiones de mysql par abase de datos
     passport    = require('passport'),
-    SocketIO = require('socket.io'),
-    { PeerServer, ExpressPeerServer } = require('peer');
+    SocketIO = require('socket.io')
+    //,    { PeerServer, ExpressPeerServer } = require('peer');
     
 
 const   server = https.createServer(options, app)
 const  io = SocketIO(server);
 const {database} = require('./keys')
-
+/*
 const peerServer = ExpressPeerServer(server,{
     debug:true
 })
-
+*/
 
 require('./lib/passport')
 
@@ -83,7 +83,7 @@ app.use(require('./routes'))
 app.use(require('./routes/authentication'))
 app.use('/links',require('./routes/links'))
 app.use('/agenda',require('./routes/agenda'))
-app.use('/peerjs',peerServer)
+//app.use('/peerjs',peerServer)
 app.use('/videollamada',require('./routes/videollamada')(io))
 
 

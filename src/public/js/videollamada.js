@@ -1,4 +1,5 @@
-var $urlIO =  window.location.hostname == "localhost" ? 'https://localhost:4000' : 'https://mrbisne.com:4000' ;
+//var $urlIO =  window.location.hostname == "localhost" ? 'https://localhost:4000' : 'https://192.168.8.2:4000'//'https://mrbisne.com:4000' ;
+var $urlIO =  window.location.hostname == "localhost" ? 'https://localhost:3003' : 'https://mrbisne.com:3003' ;
 const socket = io($urlIO);
 const videoGrid = document.getElementById('video-grid')
 let $sendMensage = $('#chat_message')
@@ -55,18 +56,19 @@ var constraints = { audio: true, video: {
 navigator.mediaDevices.getUserMedia(
   constraints
  ).then(stream => {
-   //inicar protocolo de camara y audio
-   myVideoStream = stream
-   addVideoStream(myVideo, stream)
+ //inicar protocolo de camara y audio
+ myVideoStream = stream
+ addVideoStream(myVideo, stream)
 
-    myPeer.on('call', (call) => {
-      call.answer(myVideoStream)
-      restart = false;
-      const video = document.createElement('video')
-      call.on('stream', userVideoStream => {
-        addVideoStream(video, userVideoStream)
-      })   
+  //recibir reespuesta de otros usuarios
+  myPeer.on('call', call => {
+    call.answer(stream)
+    restart = false;
+    const video = document.createElement('video')
+    call.on('stream', userVideoStream => {
+      addVideoStream(video, userVideoStream)
     })
+  })
   
     //detectar coneccion de nuevo usuaio
     socket.on('user-connected', (userId) => {
@@ -138,6 +140,7 @@ myPeer.on('open', id => {
 /************************************************************** */
 // Este evento se ejecuta cuando ocurra un error al conectarse al servidor de PeerJS
 myPeer.on("error", function(err) {
+  console.log(err)
   let errorDet = 'descripcion de error=> '
   switch (err.type) {
     case "browser-incompatible":
@@ -226,6 +229,15 @@ function connectToNewUser(userId, stream) {
     console.log(peers)
 }
 
+ //agregar video stream y darle play 
+function addVideoStream(video, stream) {
+   video.srcObject = stream
+   video.addEventListener('loadedmetadata', () => {
+     video.play()
+   })
+   videoGrid.append(video)
+ } 
+ 
  //agregar video stream y darle play 
 function addVideoStream(video, stream) {
    video.srcObject = stream
