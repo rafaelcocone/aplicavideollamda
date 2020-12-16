@@ -24,6 +24,7 @@ module.exports = function(io) {
 
       var roomId  =  null,
             userId =  null,
+            sqle  = "",
             errorType = '',
             ticket = [0]
       const veee = undefined
@@ -41,6 +42,18 @@ module.exports = function(io) {
         if( roomId == '10')
           throw ''
         else{
+
+          sqle = ' SELECT  DISTINCT    * FROM gruposintegrantes ';
+          sqle += ' INNER JOIN grupos 				ON grupos.id = gruposintegrantes.id_grupos';
+          sqle += ' inner JOIN comunicacionRlRoomContactos ON comunicacionRlRoomContactos.id_gruposintegrantes  = gruposintegrantes.id';
+          sqle += ' where grupos.tipo = "S" AND gruposintegrantes.state = "A" AND grupos.state = "A"';
+          sqle += ' AND comunicacionRlRoomContactos.id_comunicacionCtRoom = ? AND gruposintegrantes.id_users = ? limit 1';
+        
+         ticket = await pool.query(sqle,[roomId, userId])
+         console.log( ticket)
+          if(ticket.length > 0 )
+            throw ''
+
           ticket = await pool.query('SELECT * FROM tickets WHERE id_ticket = ? limit 1',[ roomId])
           if(ticket.length == 0 )
             throw 'El ticket no ha sido localizado'
