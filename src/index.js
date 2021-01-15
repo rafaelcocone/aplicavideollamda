@@ -83,8 +83,14 @@ app.use(require('./routes'))
 app.use(require('./routes/authentication'))
 app.use('/links',require('./routes/links'))
 app.use('/agenda',require('./routes/agenda'))
+
+
+
+
 //app.use('/peerjs',peerServer)
 app.use('/videollamada',require('./routes/videollamada')(io))
+app.use('/grabadora',require('./routes/grabadora'))
+//app.use('/meet',require('./routes/meet'))
 
 
 //public

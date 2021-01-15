@@ -19,6 +19,11 @@ module.exports = function(io) {
       res.render('videollamada/videollamada', { roomId })
     })*/ 
     
+    router.get('/meet', (req, res) => {
+      res.render('videollamada/meet', { ticket: [] })
+  })
+
+
     
     router.get('/:room', isLoggedIn,async(req,res) => {
 

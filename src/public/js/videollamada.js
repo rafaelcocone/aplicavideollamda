@@ -288,3 +288,7 @@ document.getElementById('main__controles_salir')
       window.open($urlIO+"/profile",'_self')    
   });
 
+document.getElementById('main__controles_salir')
+  .addEventListener('click', (e) => {
+    window.open($urlIO+"/profile",'_self')    
+});
