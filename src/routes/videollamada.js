@@ -24,6 +24,11 @@ module.exports = function(io) {
   })
 
 
+  router.get('/singlepeer', (req, res) => {
+    res.render('videollamada/singlepeer', { ticket: [] })
+})
+
+
     
     router.get('/:room', isLoggedIn,async(req,res) => {
 

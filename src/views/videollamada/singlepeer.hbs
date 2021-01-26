@@ -1,0 +1,84 @@
+
+ <link rel="stylesheet" href="/css/videollamada.css">
+<link rel="stylesheet" href="/css/singlepeer.css">
+<!--  <script src="/js/peerjs.js" defer ></script>-->
+<!--<script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>-->
+
+<div class="container ">
+   
+       
+    <div class="main">
+        <div class="main__izquierda">
+            <div class="main__videos">
+                <video class="secondary-video" autoplay id="remote-video"></video>
+                <video class="primary-video" autoplay muted id="local-video"></video>
+            </div>
+            <div class="main__controles">
+                 <div class="main__controles__panel"></div>
+
+                <div class="main__controles__panel">
+                    <div onclick="muteUnmute()" class="main__controles_button main__mute_button" style="display: block;">
+                         {{!--<i class="fas fa-microphone"></i>--}}
+                         <img src="/img/audio.png" alt="Mute" style="width:60px;height:60px;">
+                    </div>
+                    <div onclick="muteUnmute()" class="main__controles_button main__mute_button" style="display: none;">
+                         {{!--<i class="fas fa-microphone"></i>--}}
+                         <img src="/img/sin_sonido.png" alt="Mute" style="width:60px;height:60px;">
+                    </div>
+
+
+                    <div onclick="playStop()" class="main__controles_button main__video_button" style="display: block;">
+                         {{!--<i class="fas fa-video"></i>--}}
+                        <img src="/img/video.png" alt="Stop video" style="width:60px;height:60px;">
+                    </div>
+                     <div onclick="playStop()" class="main__controles_button main__video_button" style="display: none;" >
+                         {{!--<i class="fas fa-video"></i>--}}
+                        <img src="/img/sin_video.png" alt="Stop video" style="width:60px;height:60px;">
+                    </div>
+
+                     <div  class="main__controles_button main__refresh_button" style="display: block;">
+                         <i class="fas fa-sync-alt" ></i>
+                       
+                    </div>
+
+
+                </div>
+            
+                <div class="main__controles__panel">
+                    <div class="main__controles_button2" id="main__controles_salir">
+                        <span class="leave_meeting text-uppercase">Salir</span>
+                    </div>
+                </div>
+
+                
+            </div>
+                
+            
+
+        </div>
+        <div class="main__derecha">
+            <div class="main__header text-uppercase">
+                <h6>Chat</h6>
+            </div>
+            <div class="main__chat_window">
+                <ul class="chat__messages_list">
+
+                </ul>
+            </div>
+            <div class="main__message_container">
+                <input type="text" id="chat_message" placeholder="Escribe un mensaje...">
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+   
+  <script src="/js/singlepeer.js" defer ></script>
+

@@ -4,7 +4,7 @@ module.exports = {
         user: 'asys',
         password: '1nt3gr4*2019',
         port: 5543,
-        database: 'simula20',
+        database: 'mrb20',
         queueLimit: 0,
         waitForConnection: true
     }
