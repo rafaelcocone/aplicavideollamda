@@ -1,15 +1,143 @@
+#video-grid{
+    padding: 0;
+    margin: 0;
+
+}
 
 .primary-video {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    /*width: 20rem;
+    height: 300px;*/
     object-fit: cover;
 }
 
 .secondary-video {
     position: absolute;
-    max-width: 30%;
-    width: 30%;
+    max-width: 150px;
+    width: 150px;
     margin: 16px;
     border-radius: 16px;
+}
+
+
+.main{
+    min-height: 50vh;
+    height:  80vh;
+    width: auto;
+    display: flex;
+    padding: 10px;
+}
+
+.main__izquierda{
+    flex: 0.8;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.main__videos {
+    flex-grow: 1;
+    background-color: black;
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 40px;
+}
+
+.main__controles {
+    display: flex;
+    background-color: #1C1E20;
+    color: #D2D2D2;
+    padding: 5px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.main__controles__panel{
+    display: flex;
+}
+
+.main__controles_button{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 10px;
+    min-width: 80px;
+    cursor: pointer;
+}
+
+.main__controles_button2{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    min-width: 100px;
+    min-height: 30px;
+    height: 30px;
+    cursor: pointer;
+    background-color: red;
+    color: white;
+    border-radius: 15px 15px 15px 15px;
+}
+
+.main__controles_button i{
+    font-size: 24px;
+}
+
+.main__controles_button:hover {
+    background-color: #343434;
+    border-radius: 5px;
+}
+
+.leave_meeting{
+    color: white;
+}
+
+.main__derecha{
+    flex: 0.2;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #4d5858;
+}
+
+.main__header{
+    padding-top: 5px;
+    background-color: #eaa11c;
+    color: white;
+    text-align: center;
+}
+
+.main__chat_window{
+    flex-grow: 1;
+    overflow-y: auto;
+
+    background-color:#e9ecef;
+    color: black;
+
+}
+
+.main__message_container{
+    padding: 22px 12px;
+    display: flex;
+    background-color: white;
+    color: black;
+    
+}
+
+.main__message_container input {
+    flex-grow: 1;
+    background-color: transparent;
+    border: none;
+    color: #000000;
+}
+
+.tranmition_unmute, .tranmition_stop {
+    display: flex;
+    flex-direction: row;
+    color: #CC3B33;
+
+    justify-content: space-around;
 }

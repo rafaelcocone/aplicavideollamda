@@ -77,19 +77,27 @@ function startCall(otherUserId) {
     })
 }
 
-function toggleVideo(b) {
-    if (b == "true") {
-        localStream.getVideoTracks()[0].enabled = true
-    } else {
-        localStream.getVideoTracks()[0].enabled = false
-    }
-} 
 
-function toggleAudio(b) {
-    if (b == "true") {
-        localStream.getAudioTracks()[0].enabled = true
+//mute a un video
+const muteUnmute = () => {
+    const enabled = localStream.getAudioTracks()[0].enabled;
+    if (enabled) {
+      localStream.getAudioTracks()[0].enabled = false;
     } else {
-        localStream.getAudioTracks()[0].enabled = false
+      localStream.getAudioTracks()[0].enabled = true;
     }
-} 
+    $('.main__mute_button').toggle();
+  }
+  
+  //activar y ddeactivar video
+  const playStop = () => {
+    let enabled = localStream.getVideoTracks()[0].enabled;
+    if (enabled) {
+      localStream.getVideoTracks()[0].enabled = false;
+    } else {
+      localStream.getVideoTracks()[0].enabled = true;
+    }
+    $('.main__video_button').toggle();
+  }
+  
 
