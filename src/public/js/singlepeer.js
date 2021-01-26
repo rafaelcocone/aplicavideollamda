@@ -1,3 +1,6 @@
+var $urlIO =  window.location.hostname == "localhost" ? 'https://localhost:4000' : 'https://mrbisne.com:4000' ;
+const socket = io($urlIO);
+
 let localVideo = document.getElementById("local-video")
 let remoteVideo = document.getElementById("remote-video")
 
@@ -8,7 +11,8 @@ localVideo.onplaying = () => { localVideo.style.opacity = 1 }
 remoteVideo.onplaying = () => { remoteVideo.style.opacity = 1 }
 
 let peer
-function init(userId) {
+let otroUsurio = undefined
+const init = (userId) => {
     /*peer = new Peer(userId, {
         host: 'localhost',
         secure:true, 
@@ -30,10 +34,12 @@ function init(userId) {
 
 
     listen()
+    //socket.emit('join-room', ROOM_ID, id)
+    socket.emit('join-room', 'singlepeer', userId)
 }
 
 let localStream
-function listen() {
+const listen = () => {
     peer.on('call', (call) => {
 
         navigator.getUserMedia({
@@ -57,7 +63,9 @@ function listen() {
     })
 }
 
-function startCall(otherUserId) {
+
+const startCall = () => {   
+    let otherUserId = otroUsurio
     navigator.getUserMedia({
         audio: true,
         video: true
@@ -99,5 +107,11 @@ const muteUnmute = () => {
     }
     $('.main__video_button').toggle();
   }
-  
 
+  /******************************* */
+init(id_usuario)
+
+    //detectar coneccion de nuevo usuaio
+    socket.on('user-connected', (userId) => {
+        otroUsurio = userId
+      })

@@ -24,8 +24,15 @@ module.exports = function(io) {
   })
 
 
-  router.get('/singlepeer', (req, res) => {
-    res.render('videollamada/singlepeer', { ticket: [] })
+  router.get('/singlepeer',isLoggedIn,async (req, res) => {
+   
+    let id =   req.user.id
+  
+    res.render('videollamada/singlepeer', { ticket: [],  
+      id_usuario: id
+      })
+
+   
 })
 
 
