@@ -65,7 +65,7 @@ const listen = () => {
 
 
 const startCall = () => {   
-    let otherUserId = otroUsurio
+    let otherUserId = otroUsurio.userId
     navigator.getUserMedia({
         audio: true,
         video: true
@@ -114,4 +114,5 @@ init(id_usuario)
     //detectar coneccion de nuevo usuaio
     socket.on('user-connected', (userId) => {
         otroUsurio = userId
+        $('.main__startCall').toggle();
       })
