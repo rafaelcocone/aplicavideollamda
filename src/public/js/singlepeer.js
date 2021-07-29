@@ -3,6 +3,7 @@ const socket = io($urlIO);
 
 let localVideo = document.getElementById("local-video")
 let remoteVideo = document.getElementById("remote-video")
+let $sendMensage = $('#chat_message')
 
 localVideo.style.opacity = 0
 remoteVideo.style.opacity = 0
@@ -31,15 +32,16 @@ const init = (userId) => {
                ]}
       })
 
-
+      socket.emit('join-room', ROOM_ID, userId)
 
     listen()
     //socket.emit('join-room', ROOM_ID, id)
-    socket.emit('join-room', 'singlepeer', userId)
+   
 }
 
 let localStream
 const listen = () => {
+               
     peer.on('call', (call) => {
 
         navigator.getUserMedia({
@@ -57,9 +59,26 @@ const listen = () => {
                 localVideo.className = "secondary-video"
 
             })
-
         })
-        
+    })
+
+     //evento de enviar mesajes
+     $('#chat_message').keydown( (e)  => {
+        if(e.which == 13 && $sendMensage.val().length !== 0 ){
+            socket.emit('message', {mensaje:$sendMensage.val(), name: room_name });
+            $sendMensage.val('');
+        }
+    })
+
+    ///resibir mensajes de otros usuario por chat
+    socket.on('createMessage', message => {
+    
+        $('.chat__messages_list').append(
+            $('<li/>')
+                .addClass('chat__message')
+                .append(`<b>${message.name}:</b> ${message.mensaje}`)
+        )
+        scrollToBottom();
     })
 }
 
@@ -108,11 +127,34 @@ const muteUnmute = () => {
     $('.main__video_button').toggle();
   }
 
-  /******************************* */
-init(id_usuario)
+/********************************************************************** */
+//funciones y enevtos de chat
+
+// moverse al fondo del chat chando aparece un mensage
+const scrollToBottom = () => {
+    var d = $('.main__chat_window');
+    d.scrollTop(d.prop("scrollHeight"));
+  }
+  
+  document.getElementById('main__controles_salir')
+      .addEventListener('click', (e) => {
+        window.open($urlIO+"/profile",'_self')    
+    });
+  
+  document.getElementById('main__controles_salir')
+    .addEventListener('click', (e) => {
+      window.open($urlIO+"/profile",'_self')    
+  });
+
 
     //detectar coneccion de nuevo usuaio
     socket.on('user-connected', (userId) => {
-        otroUsurio = userId
-        $('.main__startCall').toggle();
-      })
+    otroUsurio = userId
+    $('.main__startCall').toggle();
+    })
+
+
+
+/********************************************************************** */
+init(id_usuario)
+

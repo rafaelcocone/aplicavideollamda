@@ -26,10 +26,12 @@ module.exports = function(io) {
 
   router.get('/singlepeer',isLoggedIn,async (req, res) => {
    
-    let id =   req.user.id
+    let id_usuario =   req.user.id
   
     res.render('videollamada/singlepeer', { ticket: [],  
-      id_usuario: id
+      name: req.user.name, 
+      id_usuario: id_usuario,
+      email: req.user.email
       })
 
    
@@ -132,6 +134,7 @@ module.exports = function(io) {
   
             socket.on('message', (message) => {
               //send message to the same room
+              console.log(message)
               io.to(roomId).emit('createMessage', message)
             }); 
   
